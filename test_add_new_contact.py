@@ -3,6 +3,9 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 import unittest
+from contact_parameters import Contact
+
+from selenium.webdriver.chrome.webdriver import WebDriver
 
 
 class TestAddNewContact(unittest.TestCase):
@@ -10,38 +13,50 @@ class TestAddNewContact(unittest.TestCase):
         self.wd = webdriver.Chrome()
         self.wd.implicitly_wait(30)
 
-    def test_add_new_contact(self):
-        wd = self.wd
+    def open_home_page(self, wd: WebDriver):
         wd.get("http://localhost/addressbook/")
+
+    def login(self, wd: WebDriver, username, password):
+        # login
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys("admin")
+        wd.find_element_by_name("user").send_keys(username)
         wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys("secret")
+        wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_xpath("//input[@value='Login']").click()
+
+    def create_contact(self, wd: WebDriver, contact_parameters):
+        # init contact creation
         wd.find_element_by_link_text("add new").click()
+        # fill contact form
         wd.find_element_by_name("firstname").click()
         wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(u"РЎРѕС„СЊСЏ")
+        wd.find_element_by_name("firstname").send_keys(contact_parameters.contact_firstname)
         wd.find_element_by_xpath("//body").click()
         wd.find_element_by_name("mobile").click()
         wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys("8974298546004")
+        wd.find_element_by_name("mobile").send_keys(contact_parameters.mobile_phone)
+        # submit contact creation
         wd.find_element_by_xpath("//input[19]").click()
+
+    def logout(self, wd: WebDriver):
         wd.find_element_by_link_text("Logout").click()
 
+    def test_add_new_contact(self):
+        wd = self.wd
+        self.open_home_page(wd)
+        self.login(wd, username="admin", password="secret")
+        self.create_contact(wd, Contact(contact_firstname=u"РЎРѕС„СЊСЏ", mobile_phone="8974298546004"))
+        self.logout(wd)
+
     def is_element_present(self, how, what):
-        try:
-            self.wd.find_element(by=how, value=what)
-        except NoSuchElementException as e:
-            return False
+        try: self.wd.find_element(by=how, value=what)
+        except NoSuchElementException as e: return False
         return True
 
     def is_alert_present(self):
-        try:
-            self.wd.switch_to_alert()
-        except NoAlertPresentException as e:
-            return False
+        try: self.wd.switch_to_alert()
+        except NoAlertPresentException as e: return False
         return True
 
     def tearDown(self):
