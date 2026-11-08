@@ -17,7 +17,7 @@ class TestAddNewContact(unittest.TestCase):
         wd.get("http://localhost/addressbook/")
 
     def login(self, wd: WebDriver, username, password):
-        # login
+        self.open_home_page(wd)
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
@@ -44,7 +44,6 @@ class TestAddNewContact(unittest.TestCase):
 
     def test_add_new_contact(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.create_contact(wd, Contact(contact_firstname=u"РЎРѕС„СЊСЏ", mobile_phone="8974298546004"))
         self.logout(wd)
