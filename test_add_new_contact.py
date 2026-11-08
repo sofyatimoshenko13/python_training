@@ -13,11 +13,13 @@ class TestAddNewContact(unittest.TestCase):
         self.wd = webdriver.Chrome()
         self.wd.implicitly_wait(30)
 
-    def open_home_page(self, wd: WebDriver):
+    def open_home_page(self):
+        wd = self.wd
         wd.get("http://localhost/addressbook/")
 
-    def login(self, wd: WebDriver, username, password):
-        self.open_home_page(wd)
+    def login(self, username, password):
+        wd = self.wd
+        self.open_home_page()
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
@@ -25,7 +27,8 @@ class TestAddNewContact(unittest.TestCase):
         wd.find_element_by_name("pass").send_keys(password)
         wd.find_element_by_xpath("//input[@value='Login']").click()
 
-    def create_contact(self, wd: WebDriver, contact_parameters):
+    def create_contact(self, contact_parameters):
+        wd = self.wd
         # init contact creation
         wd.find_element_by_link_text("add new").click()
         # fill contact form
@@ -39,14 +42,14 @@ class TestAddNewContact(unittest.TestCase):
         # submit contact creation
         wd.find_element_by_xpath("//input[19]").click()
 
-    def logout(self, wd: WebDriver):
+    def logout(self):
+        wd = self.wd
         wd.find_element_by_link_text("Logout").click()
 
     def test_add_new_contact(self):
-        wd = self.wd
-        self.login(wd, username="admin", password="secret")
-        self.create_contact(wd, Contact(contact_firstname=u"РЎРѕС„СЊСЏ", mobile_phone="8974298546004"))
-        self.logout(wd)
+        self.login(username="admin", password="secret")
+        self.create_contact(Contact(contact_firstname=u"РЎРѕС„СЊСЏ", mobile_phone="8974298546004"))
+        self.logout()
 
     def is_element_present(self, how, what):
         try: self.wd.find_element(by=how, value=what)
