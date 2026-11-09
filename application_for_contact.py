@@ -3,7 +3,7 @@ from selenium.webdriver.chrome.webdriver import WebDriver
 class Application:
 
     def __init__(self):
-        self.wd = webdriver.Chrome()
+        self.wd = WebDriver()
         self.wd.implicitly_wait(30)
 
     def open_home_page(self):
