@@ -4,7 +4,7 @@ class ContactHelper:
         self.app = app
 
     def create(self, contact_parameters):
-        wd = self.wd
+        wd = self.app.wd
         # init contact creation
         wd.find_element_by_link_text("add new").click()
         # fill contact form
