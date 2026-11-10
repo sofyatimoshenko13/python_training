@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
-from group import Group
-from application_for_group import Application
+from models.group import Group
+from fixtures.application_for_group import Application
 
 
 @pytest.fixture
