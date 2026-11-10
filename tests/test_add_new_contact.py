@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import pytest
-from contact_parameters import Contact
+from models.contact_parameters import Contact
 from fixtures.application_for_contact import Application
 
 
@@ -12,6 +12,6 @@ def app(request):
 
 
 def test_add_new_contact(app):
-    app.login(username="admin", password="secret")
+    app.session.login(username="admin", password="secret")
     app.create_contact(Contact(contact_firstname=u"РЎРѕС„СЊСЏ", mobile_phone="8974298546004"))
-    app.logout()
+    app.session.logout()
