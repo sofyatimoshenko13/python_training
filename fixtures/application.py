@@ -1,6 +1,6 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
 from fixtures.session import SessionHelper
-from fixtures.contact import ContactHelper
+from fixtures.create_helper import Helper
 
 class Application:
 
@@ -8,7 +8,8 @@ class Application:
         self.wd = WebDriver()
         self.wd.implicitly_wait(30)
         self.session = SessionHelper(self)
-        self.contact = ContactHelper(self)
+        self.group = Helper(self)
+        self.contact = Helper(self)
 
     def open_home_page(self):
         wd = self.wd
