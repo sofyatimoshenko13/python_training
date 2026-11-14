@@ -57,6 +57,11 @@ class Helper:
         wd = self.app.wd
         wd.find_element_by_link_text("groups").click()
 
+    def count_groups(self):
+        wd = self.app.wd
+        self.open_groups_page()
+        return len(wd.find_elements_by_name("selected[]"))
+
     def create_contact(self, contact):
         wd = self.app.wd
         # init contact creation
@@ -102,3 +107,7 @@ class Helper:
     def return_to_home_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home").click()
+
+    def count_contacts(self):
+        wd = self.app.wd
+        return len(wd.find_elements_by_name("selected[]"))
