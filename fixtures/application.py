@@ -1,6 +1,6 @@
 from selenium.webdriver.chrome.webdriver import WebDriver
 from fixtures.session import SessionHelper
-from fixtures.create_helper import Helper
+from fixtures.helper import Helper
 
 class Application:
 
