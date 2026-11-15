@@ -2,7 +2,7 @@ from models.group import Group
 from models.contact import Contact
 import re
 
-class Helper:
+class GroupHelper:
 
     def __init__(self, app):
         self.app = app
@@ -97,7 +97,13 @@ class Helper:
                 self.group_cache.append(Group(name=text, id=id))
         return list(self.group_cache)
 
-#основные методы для контактов
+
+class ContactHelper:
+
+    def __init__(self, app):
+        self.app = app
+
+    #основные методы для контактов
 
     def create_contact(self, contact):
         wd = self.app.wd
