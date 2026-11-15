@@ -32,9 +32,12 @@ class Helper:
         self.group_cache = None
 
     def delete_first_group(self):
+        self.delete_group_by_index(0)
+
+    def delete_group_by_index(self, index):
         wd = self.app.wd
         self.open_groups_page()
-        self.select_first_group()
+        self.select_group_by_index(index)
         #submit deletion
         wd.find_element_by_name("delete").click()
         self.return_to_groups_page()
@@ -67,6 +70,10 @@ class Helper:
     def select_first_group(self):
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
+
+    def select_group_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
 
     def count_groups(self):
         wd = self.app.wd
@@ -110,10 +117,12 @@ class Helper:
         self.contact_cache = None
 
     def delete_first_contact(self):
+        self.delete_contact_by_index(0)
+
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
         self.open_home_page()
-        #select first contact
-        wd.find_element_by_name("selected[]").click()
+        self.select_contact_by_index(index)
         #submit deletion
         wd.find_element_by_name("delete").click()
         self.return_to_home_page()
@@ -146,6 +155,14 @@ class Helper:
     def open_modification_of_first_contact(self):
         wd = self.app.wd
         wd.find_element_by_xpath("//img[@alt='Edit']").click()
+
+    def select_first_contact(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+
+    def select_contact_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
 
     def count_contacts(self):
         wd = self.app.wd
