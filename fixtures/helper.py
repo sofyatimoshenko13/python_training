@@ -17,6 +17,7 @@ class Helper:
         # submit group creation
         wd.find_element_by_name("submit").click()
         self.return_to_groups_page()
+        self.group_cache = None
 
     def modify_first_group(self, new_group_data):
         wd = self.app.wd
@@ -28,6 +29,7 @@ class Helper:
         # submit modification
         wd.find_element_by_name("update").click()
         self.return_to_groups_page()
+        self.group_cache = None
 
     def delete_first_group(self):
         wd = self.app.wd
@@ -36,6 +38,7 @@ class Helper:
         #submit deletion
         wd.find_element_by_name("delete").click()
         self.return_to_groups_page()
+        self.group_cache = None
 
 #вспомогательные методы для групп
 
@@ -70,15 +73,18 @@ class Helper:
         self.open_groups_page()
         return len(wd.find_elements_by_name("selected[]"))
 
+    group_cache = None
+
     def get_group_list (self):
-        wd = self.app.wd
-        self.open_groups_page()
-        groups = []
-        for element in wd.find_elements_by_css_selector("span.group"):
-            text = element.text
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            groups.append(Group(name=text, id=id))
-        return groups
+        if self.group_cache is None:
+            wd = self.app.wd
+            self.open_groups_page()
+            self.group_cache = []
+            for element in wd.find_elements_by_css_selector("span.group"):
+                text = element.text
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                self.group_cache.append(Group(name=text, id=id))
+        return list(self.group_cache)
 
 #основные методы для контактов
 
@@ -91,6 +97,7 @@ class Helper:
         # submit contact creation
         wd.find_element_by_xpath("//input[19]").click()
         self.return_to_home_page()
+        self.contact_cache = None
 
     def modify_first_contact(self, new_contact_data):
         wd = self.app.wd
@@ -100,6 +107,7 @@ class Helper:
         #submit modification
         wd.find_element_by_name("update").click()
         self.return_to_home_page()
+        self.contact_cache = None
 
     def delete_first_contact(self):
         wd = self.app.wd
@@ -109,6 +117,7 @@ class Helper:
         #submit deletion
         wd.find_element_by_name("delete").click()
         self.return_to_home_page()
+        self.contact_cache = None
 
 #вспомогательные методы для контактов
 
@@ -142,13 +151,16 @@ class Helper:
         wd = self.app.wd
         return len(wd.find_elements_by_name("selected[]"))
 
+    contact_cache = None
+
     def get_contact_list (self):
-        wd = self.app.wd
-        self.open_home_page()
-        contacts = []
-        for element in wd.find_elements_by_name("entry"):
-            textln = element.find_element_by_xpath("./td[2]").text
-            textfn = element.find_element_by_xpath("./td[3]").text
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            contacts.append(Contact(lastname=textln, firstname=textfn, id=id))
-        return contacts
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.open_home_page()
+            self.contact_cache = []
+            for element in wd.find_elements_by_name("entry"):
+                textln = element.find_element_by_xpath("./td[2]").text
+                textfn = element.find_element_by_xpath("./td[3]").text
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                self.contact_cache.append(Contact(lastname=textln, firstname=textfn, id=id))
+        return list(self.contact_cache)
