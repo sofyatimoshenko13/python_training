@@ -192,8 +192,7 @@ class Helper:
                 firstname = cells[2].text
                 id = cells[0].find_element_by_tag_name("input").get_attribute("value")
                 all_phones = cells[5].text
-                self.contact_cache.append(Contact(firstname=firstname, middlename=None, lastname=lastname, id=id,
-                                                  all_phones=all_phones))
+                self.contact_cache.append(Contact(firstname=firstname, lastname=lastname, id=id, all_phones=all_phones))
         return list(self.contact_cache)
 
     def open_contact_to_edit_by_index(self, index):
@@ -214,13 +213,12 @@ class Helper:
         wd = self.app.wd
         self.open_contact_to_edit_by_index(index)
         firstname = wd.find_element_by_name("firstname").get_attribute("value")
-        middlename = wd.find_element_by_name("middlename").get_attribute("value")
         lastname = wd.find_element_by_name("lastname").get_attribute("value")
         id = wd.find_element_by_name("id").get_attribute("value")
         home_phone = wd.find_element_by_name("home").get_attribute("value")
         mobile_phone = wd.find_element_by_name("mobile").get_attribute("value")
         work_phone = wd.find_element_by_name("work").get_attribute("value")
-        return Contact(firstname=firstname, middlename=middlename, lastname=lastname, id=id,
+        return Contact(firstname=firstname, lastname=lastname, id=id,
                        home_phone=home_phone, mobile_phone=mobile_phone,
                        work_phone=work_phone)
 
@@ -228,24 +226,11 @@ class Helper:
         wd = self.app.wd
         self.open_contact_view_by_index(index)
         text = wd.find_element_by_id("content").text
-        full_name = next((line.strip() for line in text.splitlines() if line.strip()), "")
-        name_parts = full_name.split()
-        if len(name_parts) >= 3:
-            firstname = name_parts[0]
-            middlename = " ".join(name_parts[1:-1])
-            lastname = name_parts[-1]
-        elif len(name_parts) == 2:
-            firstname, middlename, lastname = name_parts[0], "", name_parts[1]
-        elif len(name_parts) == 1:
-            firstname, middlename, lastname = name_parts[0], "", ""
-        else:
-            firstname, middlename, lastname = "", "", ""
         home_match = re.search("H: (.*)", text)
         mobile_match = re.search("M: (.*)", text)
         work_match = re.search("W: (.*)", text)
         home_phone = home_match.group(1) if home_match else ""
         mobile_phone = mobile_match.group(1) if mobile_match else ""
         work_phone = work_match.group(1) if work_match else ""
-        return Contact(firstname=firstname, middlename=middlename, lastname=lastname,
-                       home_phone=home_phone, mobile_phone=mobile_phone,
+        return Contact(home_phone=home_phone, mobile_phone=mobile_phone,
                        work_phone=work_phone)
