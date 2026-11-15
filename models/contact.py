@@ -2,12 +2,13 @@ from sys import maxsize
 
 class Contact:
 
-    def __init__(self, lastname = None, firstname=None,
+    def __init__(self, lastname = None, firstname=None, address = None,
                  all_phones = None, mobile_phone=None, home_phone=None, work_phone=None,
                  all_emails = None, email1 = None, email2 = None, email3 = None,
                  id=None):
         self.lastname = lastname
         self.firstname = firstname
+        self.address = address
         self.all_phones = all_phones
         self.mobile_phone = mobile_phone
         self.home_phone = home_phone
