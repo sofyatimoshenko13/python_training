@@ -228,11 +228,24 @@ class Helper:
         wd = self.app.wd
         self.open_contact_view_by_index(index)
         text = wd.find_element_by_id("content").text
+        full_name = next((line.strip() for line in text.splitlines() if line.strip()), "")
+        name_parts = full_name.split()
+        if len(name_parts) >= 3:
+            firstname = name_parts[0]
+            middlename = " ".join(name_parts[1:-1])
+            lastname = name_parts[-1]
+        elif len(name_parts) == 2:
+            firstname, middlename, lastname = name_parts[0], "", name_parts[1]
+        elif len(name_parts) == 1:
+            firstname, middlename, lastname = name_parts[0], "", ""
+        else:
+            firstname, middlename, lastname = "", "", ""
         home_match = re.search("H: (.*)", text)
         mobile_match = re.search("M: (.*)", text)
         work_match = re.search("W: (.*)", text)
         home_phone = home_match.group(1) if home_match else ""
         mobile_phone = mobile_match.group(1) if mobile_match else ""
         work_phone = work_match.group(1) if work_match else ""
-        return Contact(home_phone=home_phone, mobile_phone=mobile_phone,
+        return Contact(firstname=firstname, middlename=middlename, lastname=lastname,
+                       home_phone=home_phone, mobile_phone=mobile_phone,
                        work_phone=work_phone)

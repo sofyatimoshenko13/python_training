@@ -25,7 +25,17 @@ def test_full_name_on_home_page(app):
     contact_from_edit_page = app.contact.get_contact_info_from_edit_page(0)
     assert merge_names_like_on_home_page(contact_from_home_page) == merge_names_like_on_home_page(contact_from_edit_page)
 
+def test_full_name_on_contact_view_page(app):
+    contact_from_view_page = app.contact.get_contact_from_view_page(0)
+    contact_from_edit_page = app.contact.get_contact_info_from_edit_page(0)
+    assert merge_names_like_on_contact_view_page(contact_from_view_page) == merge_names_like_on_contact_view_page(contact_from_edit_page)
+
 def merge_names_like_on_home_page(contact):
     return " ".join(filter(lambda x: x != "",
                            filter(lambda x: x is not None,
                                   [contact.firstname, contact.lastname])))
+
+def merge_names_like_on_contact_view_page(contact):
+    return " ".join(filter(lambda x: x != "",
+                           filter(lambda x: x is not None,
+                                  [contact.firstname, contact.middlename, contact.lastname])))
