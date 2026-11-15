@@ -2,9 +2,9 @@ from models.contact import Contact
 
 
 def test_delete_first_contact(app):
-    old_contacts = app.contact.get_contact_list()
     if app.contact.count_contacts() == 0:
         app.contact.create_contact(Contact(firstname="test"))
+    old_contacts = app.contact.get_contact_list()
     app.contact.delete_first_contact()
     assert len(old_contacts) - 1 == app.contact.count_contacts()
     new_contacts = app.contact.get_contact_list()

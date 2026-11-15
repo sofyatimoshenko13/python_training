@@ -2,9 +2,9 @@ from models.group import Group
 
 
 def test_modify_first_group_name(app):
-    old_groups = app.group.get_group_list()
     if app.group.count_groups() == 0:
         app.group.create_group(Group(name="test"))
+    old_groups = app.group.get_group_list()
     group = Group(name="New group")
     group.id = old_groups[0].id
     app.group.modify_first_group(group)
@@ -15,9 +15,9 @@ def test_modify_first_group_name(app):
 
 
 #def test_modify_first_group_header(app):
-    #old_groups = app.group.get_group_list()
     #if app.group.count_groups() == 0:
     #    app.group.create_group(Group(header="test"))
+    #old_groups = app.group.get_group_list()
     #app.group.modify_first_group(Group(header="New header"))
     #new_groups = app.group.get_group_list()
     #assert len(old_groups) == len(new_groups)

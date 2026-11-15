@@ -1,10 +1,10 @@
 from models.group import Group
 
 
-def test_delete_first_group(app):
-    old_groups = app.group.get_group_list()
+def test_delete_some_group(app):
     if app.group.count_groups() == 0:
         app.group.create_group(Group(name="test"))
+    old_groups = app.group.get_group_list()
     app.group.delete_first_group()
     assert len(old_groups) - 1 == app.group.count_groups()
     new_groups = app.group.get_group_list()
