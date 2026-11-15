@@ -20,9 +20,12 @@ class Helper:
         self.group_cache = None
 
     def modify_first_group(self, new_group_data):
+        self.modify_group_by_index(0)
+
+    def modify_group_by_index(self, index, new_group_data):
         wd = self.app.wd
         self.open_groups_page()
-        self.select_first_group()
+        self.select_group_by_index(index)
         #open modification form
         wd.find_element_by_name("edit").click()
         self.fill_group_form(new_group_data)
@@ -107,11 +110,14 @@ class Helper:
         self.contact_cache = None
 
     def modify_first_contact(self, new_contact_data):
+        self.modify_contact_by_index(0)
+
+    def modify_contact_by_index(self, index, new_contact_data):
         wd = self.app.wd
         self.open_home_page()
-        self.open_modification_of_first_contact()
+        self.open_modification_of_contact_by_index(index)
         self.fill_contact_form(new_contact_data)
-        #submit modification
+        # submit modification
         wd.find_element_by_name("update").click()
         self.return_to_home_page()
         self.contact_cache = None
@@ -153,12 +159,14 @@ class Helper:
             wd.find_element_by_name(field_name).send_keys(text)
 
     def open_modification_of_first_contact(self):
+        self.open_modification_of_contact_by_index(0)
+
+    def open_modification_of_contact_by_index(self, index):
         wd = self.app.wd
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
 
     def select_first_contact(self):
-        wd = self.app.wd
-        wd.find_element_by_name("selected[]").click()
+        self.select_contact_by_index(0)
 
     def select_contact_by_index(self, index):
         wd = self.app.wd
