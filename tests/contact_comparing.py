@@ -28,4 +28,4 @@ def test_full_name_on_home_page(app):
 def merge_names_like_on_home_page(contact):
     return " ".join(filter(lambda x: x != "",
                            filter(lambda x: x is not None,
-                                  [contact.firstname, contact.middlename, contact.lastname])))
+                                  [contact.firstname, contact.lastname])))

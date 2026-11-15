@@ -18,7 +18,7 @@ class Contact:
         return "%s:%s:%s" % (self.id, self.lastname, self.firstname)
 
     def __eq__(self, other):
-        return (self.id is None or other.id is None or self.id == other.id) and (self.lastname is None or other.lastname is None or self.lastname == other.lastname) and (self.firstname is None or other.firstname is None or self.firstname == other.firstname)
+        return (self.id is None or other.id is None or self.id == other.id) and (self.lastname is None or other.lastname is None or self.lastname == other.lastname) and (self.firstname is None or other.firstname is None or self.firstname == other.firstname) and (self.middlename is None or other.middlename is None or self.middlename == other.middlename)
 
     def id_or_max(self):
         if self.id:
