@@ -34,3 +34,9 @@ def merge_emails_like_on_home_page(contact):
     return "\n".join(filter(lambda x: x != "",
                                  filter(lambda x: x is not None,
                                         [contact.email1, contact.email2, contact.email3])))
+
+def test_name_on_home_page(app):
+    contact_from_home_page = app.contact.get_contact_list()[0]
+    contact_from_edit_page = app.contact.get_contact_info_from_edit_page(0)
+    assert contact_from_home_page.lastname == contact_from_edit_page.lastname
+    assert contact_from_home_page.firstname == contact_from_edit_page.firstname
