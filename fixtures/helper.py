@@ -237,5 +237,12 @@ class Helper:
         home_phone = home_match.group(1) if home_match else ""
         mobile_phone = mobile_match.group(1) if mobile_match else ""
         work_phone = work_match.group(1) if work_match else ""
+        emails = [
+            el.text for el in wd.find_elements_by_css_selector("a[href^='mailto:']")
+        ]
+        email1 = emails[0] if len(emails) > 0 else ""
+        email2 = emails[1] if len(emails) > 1 else ""
+        email3 = emails[2] if len(emails) > 2 else ""
         return Contact(home_phone=home_phone, mobile_phone=mobile_phone,
-                       work_phone=work_phone)
+                       work_phone=work_phone,
+                       email1=email1, email2=email2, email3=email3,)
