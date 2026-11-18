@@ -26,7 +26,10 @@ class Contact:
     def __eq__(self, other):
         return ((self.id is None or other.id is None or self.id == other.id)
                 and (self.firstname is None or other.firstname is None or self.firstname.strip() == other.firstname.strip())
-                and (self.lastname is None or other.lastname is None or self.lastname.strip() == other.lastname.strip()))
+                and (self.lastname is None or other.lastname is None or self.lastname.strip() == other.lastname.strip())
+                and (self.address is None or other.address is None or self.address.strip() == other.address.strip())
+                and (self.all_phones is None or other.all_phones is None or self.all_phones == other.all_phones)
+                and (self.all_emails is None or other.all_emails is None or self.all_emails == other.all_emails))
 
     def id_or_max(self):
         if self.id:
