@@ -1,6 +1,7 @@
 from models.group import Group
 from models.contact import Contact
 import re
+import random
 
 class GroupHelper:
 
@@ -140,6 +141,15 @@ class ContactHelper:
         # submit contact creation
         wd.find_element_by_xpath("//input[19]").click()
         self.return_to_home_page()
+        self.contact_cache = None
+
+    def add_contact_to_group(self, contact_id, group_id):
+        wd = self.app.wd
+        self.open_home_page()
+        self.select_contact_by_id(contact_id)
+        wd.find_element_by_css_selector("select[name='to_group'] option[value='%s']" % group_id).click()
+        wd.find_element_by_name("add").click()
+        self.open_home_page()
         self.contact_cache = None
 
     def modify_first_contact(self, new_contact_data):
