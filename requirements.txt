@@ -1,0 +1,8 @@
+pytest
+pytest_bdd
+selenium==3.141.0
+urllib3<2
+jsonpickle
+pony
+pymysql
+mysql-connector-python-rf
